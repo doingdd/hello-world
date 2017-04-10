@@ -41,10 +41,19 @@ def push_rsa():
 
 def match_user(alias,user,ip):
 	labinfo = os.getcwd() + '/lab_info'
-	# if find user and IP in lab_info, return them. 
-	line = ['\n', alias, user, ip, '\n']
+	## if find user and IP in lab_info, return them. 
+	line = [ alias, user, ip, '\n']
 	if os.path.isfile(labinfo):
 		print "lab_info file found."
+		f = open(labinfo, 'a+')
+		for i in f.readlines():
+			if alias in i:
+				f.close()
+				user = i.split('|')[1]
+				ip = i.split('|')[2]
+				return user, ip
+				print "wa kaka kaka"
+		f.close
 		
 	else:
 		# if not define lab_info before, define them and return. 
@@ -64,4 +73,5 @@ def ssh_remote():
 
 
 if __name__ == "__main__":
-	match_user('a', 'root', '192.168.32.170')
+	a, b = match_user('a', 'root', '192.168.32.170')
+	print a,b
